@@ -74,7 +74,17 @@ function wait_reb(x,y){
 	wait_reb_x = x;
 	wait_reb_y = y;
 
+	l_min = Number.MAX_VALUE;
+
 	if(last_dot != -1){
+		for(let i = 1; i < sh; i++){
+			l = Math.sqrt((Math.pow((dot_list[i][0] - x),2))+(Math.pow((dot_list[i][1] - y),2)));
+			if( l_min > l && l < top_radius){
+				l_min = l;
+				wait_reb_x = dot_list[i][0];
+				wait_reb_y = dot_list[i][1];
+			}
+		}
 		wait_reb_active = true;
 		ctx_l2.beginPath();
 		clear(ctx_l2);
@@ -209,7 +219,7 @@ function move_top_abc(x1,y1){
 	y1 = y1 - 80;
 
 	if(move_top_index == -1){
-		l_min = 100000;
+		l_min = Number.MAX_VALUE;
 		for (var i = 1; i < sh; i++) {
 			l = Math.sqrt((Math.pow((dot_list[i][0] - x1),2))+(Math.pow((dot_list[i][1] - y1),2)));
 			if( l_min > l && l < top_radius ){
@@ -217,7 +227,7 @@ function move_top_abc(x1,y1){
 				move_top_index = i;
 			}
 		}
-		if(l_min != 100000){
+		if(l_min != Number.MAX_VALUE){
 			move_top(move_top_index,x1,y1);
 			redraw_circel(move_top_index,true);
 			redraw_line(move_top_index);
@@ -356,7 +366,20 @@ setupDownloadLink = function(link,type_output_date){
 			link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(output_date);
 			break;
 		case 'canvas':
-			link.href = canvas.toDataURL();
+			let img = document.createElement('canvas');
+					img.width = canvas.width;
+					img.height = canvas.height;
+					img_ctx = img.getContext("2d");
+			//layer 0
+				img_ctx.putImageData(ctx_l0.getImageData(0,0,canvas.width,canvas.height),0,0);
+			//layer 1
+				img_ctx.putImageData(ctx_l1.getImageData(0,0,canvas.width,canvas.height),0,0);
+			//layer 1_5
+				img_ctx.putImageData(ctx_l1_5.getImageData(0,0,canvas.width,canvas.height),0,0);
+			//layer 3
+				img_ctx.putImageData(ctx_l3.getImageData(0,0,canvas.width,canvas.height),0,0);
+			link.href = img.toDataURL();
+    	link.download = 'GraphABC.png';
 			break;
 	}
 }

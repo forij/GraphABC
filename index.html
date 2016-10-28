@@ -54,7 +54,7 @@
 							onmouseout="wait_reb_active = false; move_top_bool=false;move_top_index = -1; redraw_line(); redraw_circel(); wait_reb(event.pageX,event.pageY);"
 							oncontextmenu = 'return false;'>
 				Graph Painter</canvas>
-			<a href="" onclick="setupDownloadLink(this,'canvas'); " download="GraphABC.png">
+			<a onclick="setupDownloadLink(this,'canvas');" >
 				<img src="img/Save_icon.png" alt="download" id="download_graph_img">
 			</a>
 			<div id="Options" >
@@ -143,7 +143,7 @@
 					<font size="4" color="red">~#</font>
 					<input type="text" id="input_comand" onkeydown="processing(event.keyCode)">
 				</div>
-				<div id="mass_next_reb_output">2</div>
+				<div id="mass_next_reb_output">1</div>
 			</div>
 
 		<script type="text/javascript" src="scripts/VGL.js"></script>

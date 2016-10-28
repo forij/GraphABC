@@ -30,6 +30,11 @@ for(var i = 0; i < k; i++){
   }
 }
 
+/*/
+for(var j = 0; j < k * k; j++){
+  buff[buff.length] = ['dell_top',[1]];
+}
+//*/
 
 function f1(i){
   l = new Date();
