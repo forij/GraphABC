@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" width="300" height="275" id="svg2">
+  <defs id="defs5"/>
+  <g transform="translate(24.99997,26.9999)" id="g2379">
+    <path d="M 37.800542,30.25 L 216.08751,30.25" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:7.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="path2329"/>
+    <path d="M 32.153092,32.006722 L 117.87113,180.47464" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:7.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="use2331"/>
+    <path d="M 129.63157,185.42186 L 216.68651,34.638348" style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:black;stroke-width:7.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" id="use2333"/>
+    <path d="M 58 200 A 23 23 0 1 1  12,200 A 23 23 0 1 1  58 200 z" transform="matrix(2.045295,0,0,2.045295,-39.5853,-379.0589)" style="fill:#8bc5ff;fill-opacity:1;fill-rule:evenodd;stroke:#000070;stroke-width:3.66695261;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path2317"/>
+    <use transform="translate(186,0)" id="use2325" x="0" y="0" width="250" height="225" xlink:href="#path2317"/>
+    <use transform="translate(93,161)" id="use2327" x="0" y="0" width="250" height="225" xlink:href="#path2317"/>
+    <text x="33.025417" y="50.849709" style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" id="text2775" xml:space="preserve"><tspan x="33.025417" y="50.849709" style="font-size:56px;text-align:center;text-anchor:middle;font-family:Verdana" id="tspan2777">a</tspan></text>
+    <text x="216.9473" y="50.849709" style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" id="text2779" xml:space="preserve"><tspan x="216.9473" y="50.849709" style="font-size:56px;text-align:center;text-anchor:middle;font-family:Verdana" id="tspan2781">b</tspan></text>
+    <text x="124.34377" y="209.11369" style="font-size:12px;font-style:normal;font-weight:normal;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans" id="text2787" xml:space="preserve"><tspan x="124.34377" y="209.11369" style="font-size:56px;text-align:center;text-anchor:middle;font-family:Verdana" id="tspan2789">c</tspan></text>
+  </g>
+</svg>
