@@ -11,7 +11,7 @@ encoder.setRepeat(0);
 encoder.setDelay(50);
 encoder.start();
 
-k = 5;
+k = 3;
 k_x = ~~(width / k);
 k_y = ~~(height / k);
 
@@ -51,5 +51,5 @@ function f1(i){
 }
 
 encoder.finish();
-
+000000
 f1(0);

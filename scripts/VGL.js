@@ -1,16 +1,30 @@
 //Visual graph library
-var canvas_0 = document.getElementById("layer_0"),
-	ctx_l0 = canvas_0.getContext('2d');
-var canvas = document.getElementById("layer_1"),
-	ctx_l1 = canvas.getContext('2d');
-var canvas = document.getElementById("layer_1_5"),
-	ctx_l1_5 = canvas.getContext('2d');
-var canvas = document.getElementById("layer_2"),
-	ctx_l2 = canvas.getContext('2d');
-var canvas = document.getElementById("layer_3"),
-	ctx_l3 = canvas.getContext('2d');
-var canvas = document.getElementById("gr_paint"),
-	ctx_l4 = canvas.getContext('2d');
+
+//Init context
+	//Layer reb and input , outut dot
+		var canvas_0 = document.getElementById("layer_0"),
+			ctx_l0 = canvas_0.getContext('2d');
+
+	//Layer slect reb
+		var canvas_1 = document.getElementById("layer_1"),
+			ctx_l1 = canvas_1.getContext('2d');
+
+	//Layer mass reb
+		var canvas_1_5 = document.getElementById("layer_1_5"),
+			ctx_l1_5 = canvas_1_5.getContext('2d');
+
+	//Layer anim wait_reb and move_top_abc
+		var canvas_2 = document.getElementById("layer_2"),
+			ctx_l2 = canvas_2.getContext('2d');
+
+	//Layer top
+		var canvas_3 = document.getElementById("layer_3"),
+			ctx_l3 = canvas_3.getContext('2d');
+
+	//Layer select top
+		var canvas = document.getElementById("gr_paint"),
+			ctx_l4 = canvas.getContext('2d');
+//Init context
 
 ctx_l3.textAlign = "center";
 ctx_l3.textBaseline = "middle";
@@ -41,6 +55,7 @@ function _init_(){
 	window.top_radius = top_r.value;
 	window.top_color = color_t.value;
  	window.color_reb = color_r.value;
+	window.color_background = color_bg.value;
 	document.getElementById('layer_0').style.background = color_bg.value;
 }
 

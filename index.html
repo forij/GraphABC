@@ -145,13 +145,20 @@
 				</div>
 				<div id="mass_next_reb_output">1</div>
 			</div>
-
 		<script type="text/javascript" src="scripts/VGL.js"></script>
-		<script type="text/javascript" src="scripts/webgl-2d.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
 		<script type="text/javascript" src="scripts/terminal.js"></script>
 		<script>
+			//Deactive click on circel mouse
+				document.querySelector('body').onclick = function(e) {
+					if( e.which == 2 ) {
+						e.preventDefault();
+					}
+				};
+			//Deactive click on circel mouse
+			//Deactive right mouse button
 			  document.getElementById('gr_paint').oncontextmenu = function()  { return false; };
+			//Deactive select on canvas
 				document.getElementById('gr_paint').onselect = function()  { return false; };
 		</script>
 

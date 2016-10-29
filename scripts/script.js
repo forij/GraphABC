@@ -369,15 +369,13 @@ setupDownloadLink = function(link,type_output_date){
 			let img = document.createElement('canvas');
 					img.width = canvas.width;
 					img.height = canvas.height;
-					img_ctx = img.getContext("2d");
-			//layer 0
-				img_ctx.putImageData(ctx_l0.getImageData(0,0,canvas.width,canvas.height),0,0);
-			//layer 1
-				img_ctx.putImageData(ctx_l1.getImageData(0,0,canvas.width,canvas.height),0,0);
-			//layer 1_5
-				img_ctx.putImageData(ctx_l1_5.getImageData(0,0,canvas.width,canvas.height),0,0);
-			//layer 3
-				img_ctx.putImageData(ctx_l3.getImageData(0,0,canvas.width,canvas.height),0,0);
+					let img_ctx = img.getContext("2d");
+			img_ctx.fillStyle = color_background;
+			img_ctx.fillRect(0,0,canvas.width,canvas.height);
+			img_ctx.drawImage(canvas_0,0,0);
+			img_ctx.drawImage(canvas_1_5,0,0);
+			img_ctx.drawImage(canvas_3,0,0);
+
 			link.href = img.toDataURL();
     	link.download = 'GraphABC.png';
 			break;
