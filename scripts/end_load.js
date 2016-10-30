@@ -36,4 +36,4 @@ function addScript(src){
   document.head.appendChild(script);
 }
 
-setTimeout(import_js,10,'exampl_1.js');
+import_js('exampl_1.js');

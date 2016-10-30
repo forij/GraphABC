@@ -140,47 +140,67 @@ function clear(ctx1=ctx_l3){
 	ctx1.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function select_top(num,color = color_select_top){
-	if(num < sh){
-		draw_circel(dot_list[num][0],dot_list[num][1],num,color,0.1,top_radius,false,ctx_l4);
-		select_map.set(num,color);
+//Select
+	function select_top(num,color = color_select_top,text = '',pos = 'top'){
+		if(num < sh){
+			draw_circel(dot_list[num][0],dot_list[num][1],num,color,0.1,top_radius,false,ctx_l4);
+			if(!select_map.has(num)){
+				select_map.set(num,[num,color,text,pos]);
+			}else{
+				select_map.delete(num);
+				select_map.set(num,[num,color,text,pos]);
+			}
+			ctx_l4.font = "18px Verdana";
+			if(text == 'inf'){
+				text = '∞';
+			}
+			switch (pos) {
+				case 'top':
+					ctx_l4.fillText(text,dot_list[num][0],dot_list[num][1] - parseInt(top_radius) - 5);
+					break;
+				case 'back':
+					ctx_l4.fillText(text,dot_list[num][0],dot_list[num][1] + parseInt(top_radius) + 5);
+				default:
+			}
+			ctx_l4.font = "25px Verdana";
+		}
 	}
-}
 
-function deselect_top(num){
-	select_map.delete(num);
-	draw_circel(dot_list[num][0],dot_list[num][1],num);
-	redraw_circel();
-	output_matrix_reb();
-}
-
-function deselect_all(){
-	select_map.clear();
-	clear(ctx_l2);
-}
-
-function select_reb(i,j,width = width_select_reb,color = color_select_reb){
-	if(rez[(i - 1) * 100 + j] != nothing){
-		x1 = dot_list[i][0];
-		y1 = dot_list[i][1];
-
-		x2 = dot_list[j][0];
-		y2 = dot_list[j][1];
-		alert(1);
-		ctx_l1.beginPath();
-		ctx_l1.lineWidth = width;
-		ctx_l1.strokeStyle = color;
-		draw_line(dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx_l1);
-		ctx_l1.stroke();
-	}else{
-		writln('Ребро ' + i + " " + j + " неіснуэ","#F00");
+	function deselect_top(num){
+		select_map.delete(num);
+		draw_circel(dot_list[num][0],dot_list[num][1],num);
+		redraw_circel();
+		output_matrix_reb();
 	}
-}
 
-function deselect_reb(i,j){
-	select_reb(i,j,'#000');
-	output_matrix_reb();
-}
+	function deselect_all(){
+		select_map.clear();
+		clear(ctx_l2);
+	}
+
+	function select_reb(i,j,width = width_select_reb,color = color_select_reb){
+		if(rez[(i - 1) * 100 + j] != nothing){
+			x1 = dot_list[i][0];
+			y1 = dot_list[i][1];
+
+			x2 = dot_list[j][0];
+			y2 = dot_list[j][1];
+			alert(1);
+			ctx_l1.beginPath();
+			ctx_l1.lineWidth = width;
+			ctx_l1.strokeStyle = color;
+			draw_line(dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx_l1);
+			ctx_l1.stroke();
+		}else{
+			writln('Ребро ' + i + " " + j + " неіснуэ","#F00");
+		}
+	}
+
+	function deselect_reb(i,j){
+		select_reb(i,j,'#000');
+		output_matrix_reb();
+	}
+//Select
 
 function redraw_circel(except = 0){
 	clear();
@@ -191,7 +211,7 @@ function redraw_circel(except = 0){
 			if(!select_map.has(i)){
 				draw_circel(dot_list[i][0],dot_list[i][1],i);
 			}else{
-				draw_circel(dot_list[i][0],dot_list[i][1],i,select_map.get(i),0.1,top_radius,false,ctx_l4);
+				window['select_top'].apply(this,select_map.get(i));
 			}
 		}
 	}
@@ -295,6 +315,9 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 
 	ctx1.font= "15px Verdana";
 	for(var i = 0; i < circel_sh; i++ ){
+		if(circel_list[i][2] >= Number.MAX_VALUE){
+			circel_list[i][2] = '∞';
+		}
 		draw_circel.apply(this, circel_list[i]);
 	}
 	ctx1.font= "25px Verdana";
@@ -303,6 +326,9 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 function new_reb(last_dot,new_dot,mass_1 = def_mass){
 	if(last_dot < sh && new_dot < sh){
 		def_mass = Number(def_mass);
+		if(mass_1 == 'inf'){
+			mass_1 = Number.MAX_VALUE;
+		}
 		if(vector){
 			rez[(last_dot - 1) * 100 + new_dot] = mass_1;
 	//		writln("vec_reb(" + last_dot + ',' + new_dot + ')');
@@ -360,6 +386,9 @@ function del_reb(i,j,d_vector = false){
 function full_graph(mass_1 = 1){
 	if(!mass.checked && mass_1 != 1){
 		mass.checked = true;
+	}
+	if(mass_1 == 'inf' || mass_1 == Number.MAX_VALUE){
+		mass_1 = Number.MAX_VALUE;
 	}
 	for (let i = 0; i < sh - 1; i++) {
 			for (let j = 0; j < sh - 1; j++){
