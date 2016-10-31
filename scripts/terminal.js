@@ -12,6 +12,14 @@ comand_set.add('import_js');
 comand_set.add('write');
 comand_set.add('write');
 
+//special comand objects
+	var h = { } //Object help
+
+	var special_comand_set = new Set(); // special_comand_set stores date about all special function
+		special_comand_set.add('-h');
+
+//special comand objects
+
 function scroll_down(){
 	terminal.scrollTop = terminal.scrollHeight;
 }
@@ -24,14 +32,17 @@ function write(date,color = "#FFF",_scroll_down = true){
 }
 
 function writln(date,color = "#FFF",_scroll_down = true){
-	function help(){
-		writln('help');
-	}
 	terminal.innerHTML = terminal.innerHTML +  '<br>' + "<font color=" + color + ">" + date;
 	if(_scroll_down){
 		scroll_down();
 	}
 }
+
+function add_new_help(func_n,func_h){
+	h[func_n.name] = func_h;
+}
+
+add_new_help(writln,function(){writln(12)});
 
 function load_page(){
 	document.getElementById("load_div").style.visibility = "visible";
@@ -120,7 +131,7 @@ function import_js(lib){
 		find_comand = xhr.responseText.split('function ');
 		for(var i = 1; i < find_comand.length; i++){
 			new_command = "";
-			for(var j = 0; find_comand[i][j] != '('; j++){
+			for(var j = 0; find_comand[i][j] != '('  && find_comand[i][j] != ' '; j++){
 				new_command += find_comand[i][j];
 			}
 			//writln(new_command,"#0F0");
@@ -143,6 +154,8 @@ function processing(keyCode) {
 		var func_name  = "";
 		var date = [];
 		var comand_buf = "";
+		var ok = true; // if correct input date ( ok == true ) else ( ok == false)
+		var error_input_data = ''; // ( ok == fasle ) error_input_data have information about error
 
 		for(var i = 0; i < inputcommand.length; i++){
 			switch(inputcommand[i]){
@@ -164,6 +177,18 @@ function processing(keyCode) {
 					date[date.length] = comand_buf;
 					comand_buf = "";
 				}break;
+				case '-':
+					while(inputcommand[i] != ' ' && i < inputcommand.length){
+						comand_buf += inputcommand[i];
+						i++;
+					}
+					if(!special_comand_set.has(comand_buf)){
+						ok = false;
+						error_input_data = 'Команда ( ' + comand_buf + ' ) не найдена !'
+					}
+					date[date.length] = comand_buf;
+					comand_buf = "";
+					break;
 				default:{
 					if(inputcommand[i] != " "){
 						if(read_func_name){
@@ -189,14 +214,24 @@ function processing(keyCode) {
 			}
 		}
 
-		if(comand_set.has(func_name)){
+		if(comand_set.has(func_name) && ok == true){
 			try{
-				window[func_name].apply(this, date);
+				switch (date[0]) {
+					case '-h':
+						h[func_name]();
+						break;
+					default:
+						window[func_name].apply(this, date);
+				}
 			}catch(error){
 				writln(error,'#F00');
 			}
 		}else{
-			writln("Function (' " + func_name + " ') not found !",'#FF0');
+			if(ok){
+				writln("Function (' " + func_name + " ') not found !",'#F00');
+			}else {
+				writln(error_input_data,'#F00');
+			}
 		}
 		input_comand.value = "";
 		scroll_down();

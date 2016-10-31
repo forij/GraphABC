@@ -51,7 +51,6 @@ function f1(i){
     n = new Date();
     let now = n.getSeconds() * 1000 + n.getMilliseconds();
     encoder.addFrame(get_frame());
-    writln(now - last);
     i++;
     setTimeout(f1,10,i);
   }else{encoder.finish();demo();}
