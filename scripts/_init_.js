@@ -8,9 +8,9 @@
     return script;
   }
 
+  document.head.appendChild(init_script('scripts/script.js'));
   document.head.appendChild(init_script('scripts/terminal.js'));
   document.head.appendChild(init_script('scripts/VGL.js'));
-  document.head.appendChild(init_script('scripts/script.js'));
   document.head.appendChild(init_script('scripts/jsgif/LZWEncoder.js'));
   document.head.appendChild(init_script('scripts/jsgif/NeuQuant.js'));
   document.head.appendChild(init_script('scripts/jsgif/GIFEncoder.js'));
@@ -43,5 +43,6 @@
       img_ctx.drawImage(canvas,0,0);
       return(img_ctx);
     }
+
   document.head.appendChild(init_script('scripts/end_load.js'));
 }

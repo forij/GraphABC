@@ -17,7 +17,7 @@ encoder.setRepeat(0);
 encoder.setDelay(150);
 encoder.start();
 
-k = 3;
+k = 2;
 k_x = ~~(width / k);
 k_y = ~~(height / k);
 
@@ -33,10 +33,10 @@ buff = [];
 for(var i = 0; i < k; i++){
   for(var j = 0; j < k; j++){
     buff[buff.length] = ['new_top',[~~(k_x / 2) + k_x * i,~~(k_y / 2) + k_y * j]];
-    buff[buff.length] = ['select_top',[k * i + j + 1]];
+    buff[buff.length] = ['select_top',[k * i + j + 1,'#0f0','inf']];
+    buff[buff.length] = ['full_graph',['inf']];
   }
 }
-buff[buff.length] = ['full_graph',[Number.MAX_VALUE]];
 /*/
 for(var j = 0; j < k * k; j++){
   buff[buff.length] = ['dell_top',[1]];

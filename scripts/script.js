@@ -107,7 +107,11 @@ function output_martix_sm(){
 	innerHTMLContent = "<span> " + (sh - 1) + "<br>";
 	for (var i = 1; i < sh; i++) {
 		for (var j = 1; j < sh; j++){
-			innerHTMLContent = innerHTMLContent + " " + rez[(i - 1) * 100 + j];
+			if(rez[(i - 1) * 100 + j] == Number.MAX_VALUE){
+				innerHTMLContent = innerHTMLContent + " " + '∞';
+			}else{
+				innerHTMLContent = innerHTMLContent + " " + rez[(i - 1) * 100 + j];
+			}
 		}
 		innerHTMLContent = innerHTMLContent + "<br>";
 	}
@@ -132,7 +136,11 @@ function output_matrix_reb(){
 			for (let j = 1; j < sh; j++){
 				if(rez[(j - 1) * 100 + i] != nothing){
 					if(mass_active){
-						innerHTMLContent = innerHTMLContent + " " + i + " " + j + " " + rez[(j - 1) * 100 + i] + "<br>";
+						if(rez[(j - 1) * 100 + i] == Number.MAX_VALUE){
+							innerHTMLContent = innerHTMLContent + " " + i + " " + j + " " + '∞' + "<br>";
+						}else{
+							innerHTMLContent = innerHTMLContent + " " + i + " " + j + " " + rez[(j - 1) * 100 + i] + "<br>";
+						}
 						list_reb[list_reb.length] = [i,j,rez[(j - 1) * 100 + i]];
 					}else{
 						innerHTMLContent = innerHTMLContent + " " + i + " " + j + "<br>";
@@ -152,7 +160,11 @@ function output_matrix_reb(){
 			for (let j = i; j < sh; j++){
 				if(rez[(i - 1) * 100 + j] != nothing){
 					if(mass_active){
-						innerHTMLContent = innerHTMLContent + " " + i + " " + j + " " + rez[(i - 1) * 100 + j] + "<br>";
+						if(rez[(j - 1) * 100 + i] == Number.MAX_VALUE){
+							innerHTMLContent = innerHTMLContent + " " + i + " " + j + " " + '∞' + "<br>";
+						}else{
+							innerHTMLContent = innerHTMLContent + " " + i + " " + j + " " + rez[(i - 1) * 100 + j] + "<br>";
+						}
 						list_reb[list_reb.length] = [i,j,rez[(j - 1) * 100 + i]];
 					}else{
 						innerHTMLContent = innerHTMLContent + " " + i + " " + j + "<br>";

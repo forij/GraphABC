@@ -397,8 +397,8 @@ function full_graph(mass_1 = 1){
 			}
 		}
 	}
-	redraw_line();
 	output_matrix_reb();
+	redraw_line();
 }
 
 function dell_all_reb(){

@@ -7,9 +7,11 @@
 		<title>GraphABC</title>
 		<meta charset="utf-8">
 	</head>
-	<BODY onload='if(!isMobile.any()){
-							document.getElementById("load_div").style.visibility = "hidden";
-							document.getElementById("basic_page").style.visibility = "visible";}'
+	<BODY onload='
+							if(!isMobile.any()){
+								document.getElementById("load_div").style.visibility = "hidden";
+								document.getElementById("basic_page").style.visibility = "visible";
+							}'
 		onkeydown="terminal_visable(event.keyCode);
 							if(input_comand != document.activeElement){handler_event_keydown(event.keyCode)}
 							else{terminal_key(event.keyCode)}">

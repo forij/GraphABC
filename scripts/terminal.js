@@ -12,6 +12,27 @@ comand_set.add('import_js');
 comand_set.add('write');
 comand_set.add('write');
 
+function scroll_down(){
+	terminal.scrollTop = terminal.scrollHeight;
+}
+
+function write(date,color = "#FFF",_scroll_down = true){
+	terminal.innerHTML = terminal.innerHTML + " " + "<font color=" + color + ">" + date;
+	if(_scroll_down){
+		scroll_down();
+	}
+}
+
+function writln(date,color = "#FFF",_scroll_down = true){
+	function help(){
+		writln('help');
+	}
+	terminal.innerHTML = terminal.innerHTML +  '<br>' + "<font color=" + color + ">" + date;
+	if(_scroll_down){
+		scroll_down();
+	}
+}
+
 function load_page(){
 	document.getElementById("load_div").style.visibility = "visible";
 	document.getElementById("basic_page").style.visibility = "hidden";
@@ -85,24 +106,6 @@ function terminal_visable(keyCode = 192){
 	input_comand.value = input_comand.value.replace( /`/g,'');
 }
 
-function scroll_down(){
-	terminal.scrollTop = terminal.scrollHeight;
-}
-
-function write(date,color = "#FFF",_scroll_down = true){
-	terminal.innerHTML = terminal.innerHTML + " " + "<font color=" + color + ">" + date;
-	if(_scroll_down){
-		scroll_down();
-	}
-}
-
-function writln(date,color = "#FFF",_scroll_down = true){
-	terminal.innerHTML = terminal.innerHTML +  '<br>' + "<font color=" + color + ">" + date;
-	if(_scroll_down){
-		scroll_down();
-	}
-}
-
 function import_js(lib){
 	switch(lib[0]){
 		case "'": lib = lib.slice(1,lib.length - 2);  alert(lib); break;
@@ -124,7 +127,8 @@ function import_js(lib){
 			comand_set.add(new_command);
 		}
 		var script=document.createElement('script');
-		script.src = lib;
+			script.src = lib;
+			script.async = false;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	}
 }
@@ -230,7 +234,7 @@ function processFiles(files){
 	visible_home_page();
 }
 
-write("Atomy Terminal v0.3","#3BCFC8");
+write("Atomy Terminal v0.4","#3BCFC8");
 
 terminal_visable();
 import_js('VGL.js');
