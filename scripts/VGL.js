@@ -417,6 +417,7 @@ function matrix(i,j,wr = false){
 
 function dell_top(num,d_all = false){
 	if(num < sh){
+		deselect_top(num);
 		for(var i = num; i < dot_list.length - 1; i++){
 			dot_list[i] = dot_list[i + 1];
 		}

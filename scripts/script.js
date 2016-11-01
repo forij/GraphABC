@@ -108,7 +108,7 @@ function output_martix_sm(){
 	for (var i = 1; i < sh; i++) {
 		for (var j = 1; j < sh; j++){
 			if(rez[(i - 1) * 100 + j] == Number.MAX_VALUE){
-				innerHTMLContent = innerHTMLContent + " " + '∞';
+				innerHTMLContent = innerHTMLContent + " "  + '∞';
 			}else{
 				innerHTMLContent = innerHTMLContent + " " + rez[(i - 1) * 100 + j];
 			}

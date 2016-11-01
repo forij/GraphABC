@@ -25,14 +25,22 @@ function scroll_down(){
 }
 
 function write(date,color = "#FFF",_scroll_down = true){
-	terminal.innerHTML = terminal.innerHTML + " " + "<font color=" + color + ">" + date;
+	terminal.innerHTML = terminal.innerHTML + "<pre>" + "<font color=" + color + ">" + date + '</pre>';
 	if(_scroll_down){
 		scroll_down();
 	}
 }
 
+add_new_help(writln,function(){
+	writln('Команда вывода текста в консоль Atomy','#0F0');
+	writln('Аргументы');
+	writln('1: контекст сообшения которое нужно вывести');
+	writln('2: цвет текста');
+	writln('  цвет текста ( задается при помоши Color HEX code )');
+});
+
 function writln(date,color = "#FFF",_scroll_down = true){
-	terminal.innerHTML = terminal.innerHTML +  '<br>' + "<font color=" + color + ">" + date;
+	terminal.innerHTML = terminal.innerHTML +  '<pre>' + "<font color=" + color + ">" + date + '</pre>';
 	if(_scroll_down){
 		scroll_down();
 	}
@@ -41,8 +49,6 @@ function writln(date,color = "#FFF",_scroll_down = true){
 function add_new_help(func_n,func_h){
 	h[func_n.name] = func_h;
 }
-
-add_new_help(writln,function(){writln(12)});
 
 function load_page(){
 	document.getElementById("load_div").style.visibility = "visible";
@@ -147,7 +153,7 @@ function import_js(lib){
 function processing(keyCode) {
 	if(keyCode == 13){
 		put_last_command(input_comand.value);
-		terminal.innerHTML = terminal.innerHTML  + "<br>" + "<font color='red'> ~# </font>" + "<font color='white'>" + input_comand.value + "<font>";
+		terminal.innerHTML = terminal.innerHTML  + "<pre>" + "<font color='red'> ~# </font>" + "<font color='white'>" + input_comand.value + "<font></<pre>";
 
 		var inputcommand = input_comand.value;
 		var read_func_name = true;
