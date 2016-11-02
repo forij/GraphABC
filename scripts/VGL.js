@@ -75,7 +75,7 @@ move_top_bool = false;
 
 _init_();
 
-function draw_line(x1,y1,x2,y2,ctx1 = ctx_l0,color = '#000'){
+function draw_line(x1,y1,x2,y2,ctx1 = ctx_l0,color = color_reb){
 	ctx1.strokeStyle = color;
 	ctx1.moveTo(x1,y1);
 	ctx1.lineTo(x2,y2);
@@ -186,15 +186,28 @@ function clear(ctx1=ctx_l3){
 			y1 = dot_list[i][1];
 			x2 = dot_list[j][0];
 			y2 = dot_list[j][1];
-			select_map_reb.add(i * 100 + j,[x1,y1,x2,y2,ctx_l1,color]);
-			ctx_l1.beginPath();
-			ctx_l1.lineWidth = width;
-			ctx_l1.strokeStyle = color;
-			draw_line(dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx_l1);
-			ctx_l1.stroke();
+			if(!select_map_reb.has(parseInt(i) * 100 + parseInt(j))){
+				select_map_reb.set(parseInt(i) * 100 + parseInt(j),[color]);
+				select_map_reb.set(parseInt(j) * 100 + parseInt(i),[color]);
+			}else{
+				select_map_reb.delete(parseInt(i) * 100 + parseInt(j));
+				select_map_reb.set(parseInt(i) * 100 + parseInt(j),[color]);
+				select_map_reb.set(parseInt(j) * 100 + parseInt(i),[color]);
+			}
+			ctx_l0.beginPath();
+			draw_line(x1,y1,x2,y2,ctx_l0,color);
+			ctx_l0.stroke();
 		}else{
 			writln('Ребро ' + i + " " + j + " неіснуэ","#F00");
 		}
+	}
+
+	function deselect_reb(i,j){
+		select_map_reb.delete(parseInt(i) * 100 + parseInt(j));
+		select_map_reb.delete(parseInt(j) * 100 + parseInt(i));
+		ctx_l0.beginPath();
+		draw_line(x1,y1,x2,y2,ctx_l0,color_reb);
+		ctx_l0.stroke();
 	}
 
 	function deselect_reb_all(){
@@ -221,6 +234,8 @@ function redraw_circel(except = 0){
 function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 	clear(ctx1);
 	clear(ctx2);
+	select_line_list = [];
+	select_line_sh = 0;
 	line_list = [];
 	line_sh = 0;
 	circel_list = [];
@@ -260,9 +275,12 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 							let k_y = (y2 + y1 * k) / (k + 1);
 							draw_dot(k_x,k_y,"red",ctx1);
 				    }
-						if(!select_map_reb.has(i * 100 + j)){
-							line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1]];
+						if(!select_map_reb.has(parseInt(i) * 100 + parseInt(j))){
+							line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx1];
 							line_sh++;
+						}else{
+							select_line_list[select_line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx1].concat(select_map_reb.get(parseInt(i) * 100 + parseInt(j)));
+							select_line_sh++;
 						}
 				    if(mass_active){
 				    	if(rez[(i - 1) * 100 + j] == rez[(j - 1) * 100 + i]){
@@ -295,9 +313,12 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 				}
 			}else{
 				if(rez[(i - 1) * 100 + j] != nothing && except_dr(i,j) && i <= sh && j <= sh){
-					if(!select_map_reb.has(i * 100 + j)){
-						line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1]];
+					if(!select_map_reb.has(parseInt(i) * 100 + parseInt(j))){
+						line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx1];
 						line_sh++;
+					}else{
+						select_line_list[select_line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1],ctx1].concat(select_map_reb.get(parseInt(i) * 100 + parseInt(j)));
+						select_line_sh++;
 					}
 					if(mass_active){
 						circel_list[circel_sh] = [
@@ -310,11 +331,19 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 			}
 		}
 	}
+
 	ctx1.beginPath();
 	for(var i = 0; i < line_sh; i++ ){
-		draw_line(line_list[i][0],line_list[i][1],line_list[i][2],line_list[i][3],ctx1);
+		window['draw_line'].apply(this,line_list[i]);
 	}
 	ctx1.stroke();
+
+	ctx1.beginPath();
+	for(var i = 0; i < select_line_sh; i++ ){
+		window['draw_line'].apply(this,select_line_list[i]);
+	}
+	ctx1.stroke();
+
 
 	ctx_l1.beginPath();
 	for(var i = 0; i < line_sh; i++ ){
