@@ -25,7 +25,7 @@ function scroll_down(){
 }
 
 function write(date,color = "#FFF",_scroll_down = true){
-	terminal.innerHTML = terminal.innerHTML + "<pre>" + "<font color=" + color + ">" + date + '</pre>';
+	terminal.innerHTML = terminal.innerHTML + "<font color=" + color + ">" + date;
 	if(_scroll_down){
 		scroll_down();
 	}
@@ -153,7 +153,7 @@ function import_js(lib){
 function processing(keyCode) {
 	if(keyCode == 13){
 		put_last_command(input_comand.value);
-		terminal.innerHTML = terminal.innerHTML  + "<pre>" + "<font color='red'> ~# </font>" + "<font color='white'>" + input_comand.value + "<font></<pre>";
+		terminal.innerHTML = terminal.innerHTML  + "<pre>" + "<font color='red'> ~# </font>" + "<font color='white'>" + input_comand.value + "<font></pre>";
 
 		var inputcommand = input_comand.value;
 		var read_func_name = true;

@@ -35,5 +35,3 @@ function addScript(src){
   script.async = false; // чтобы гарантировать порядок
   document.head.appendChild(script);
 }
-
-import_js('exampl_1.js');

@@ -75,7 +75,8 @@ move_top_bool = false;
 
 _init_();
 
-function draw_line(x1,y1,x2,y2,ctx1 = ctx_l0){
+function draw_line(x1,y1,x2,y2,ctx1 = ctx_l0,color = '#000'){
+	ctx1.strokeStyle = color;
 	ctx1.moveTo(x1,y1);
 	ctx1.lineTo(x2,y2);
 }
@@ -141,28 +142,28 @@ function clear(ctx1=ctx_l3){
 }
 
 //Select
-	function select_top(num,color = color_select_top,text = '',pos = 'top'){
+	function select_top(num,color = color_select_top,text = '',pos = 'top',ctx1 = ctx_l4){
 		if(num < sh){
-			draw_circel(dot_list[num][0],dot_list[num][1],num,color,0.1,top_radius,false,ctx_l4);
+			draw_circel(dot_list[num][0],dot_list[num][1],num,color,0.1,top_radius,false,ctx1);
 			if(!select_map.has(num)){
 				select_map.set(num,[num,color,text,pos]);
 			}else{
 				select_map.delete(num);
 				select_map.set(num,[num,color,text,pos]);
 			}
-			ctx_l4.font = "18px Verdana";
+			ctx1.font = "18px Verdana";
 			if(text == 'inf'){
 				text = '∞';
 			}
 			switch (pos) {
 				case 'top':
-					ctx_l4.fillText(text,dot_list[num][0],dot_list[num][1] - parseInt(top_radius) - 5);
+					ctx1.fillText(text,dot_list[num][0],dot_list[num][1] - parseInt(top_radius) - 8);
 					break;
 				case 'back':
-					ctx_l4.fillText(text,dot_list[num][0],dot_list[num][1] + parseInt(top_radius) + 5);
+					ctx1.fillText(text,dot_list[num][0],dot_list[num][1] + parseInt(top_radius) + 8);
 				default:
 			}
-			ctx_l4.font = "25px Verdana";
+			ctx1.font = "25px Verdana";
 		}
 	}
 
@@ -175,17 +176,17 @@ function clear(ctx1=ctx_l3){
 
 	function deselect_all(){
 		select_map.clear();
+		select_map_reb.clear();
 		clear(ctx_l2);
 	}
 
-	function select_reb(i,j,width = width_select_reb,color = color_select_reb){
+	function select_reb(i,j,color = color_select_reb){
 		if(rez[(i - 1) * 100 + j] != nothing){
 			x1 = dot_list[i][0];
 			y1 = dot_list[i][1];
-
 			x2 = dot_list[j][0];
 			y2 = dot_list[j][1];
-			alert(1);
+			select_map_reb.add(i * 100 + j,[x1,y1,x2,y2,ctx_l1,color]);
 			ctx_l1.beginPath();
 			ctx_l1.lineWidth = width;
 			ctx_l1.strokeStyle = color;
@@ -196,8 +197,8 @@ function clear(ctx1=ctx_l3){
 		}
 	}
 
-	function deselect_reb(i,j){
-		select_reb(i,j,'#000');
+	function deselect_reb_all(){
+		clear(ctx_l1);
 		output_matrix_reb();
 	}
 //Select
@@ -254,15 +255,15 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 						let k_y = (y1 + y2 * k) / (k + 1);
 						draw_dot(k_x,k_y,"green",ctx1);
 						if(rez[(i - 1) * 100 + j] == nothing){
-
-				    let k = 1 / ((l - top_radius) / top_radius);
-						let k_x = (x2 + x1 * k) / (k + 1);
-						let k_y = (y2 + y1 * k) / (k + 1);
-
-						draw_dot(k_x,k_y,"red",ctx1);
+					    let k = 1 / ((l - top_radius) / top_radius);
+							let k_x = (x2 + x1 * k) / (k + 1);
+							let k_y = (y2 + y1 * k) / (k + 1);
+							draw_dot(k_x,k_y,"red",ctx1);
 				    }
-				    line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1]];
-				    line_sh++;
+						if(!select_map_reb.has(i * 100 + j)){
+							line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1]];
+							line_sh++;
+						}
 				    if(mass_active){
 				    	if(rez[(i - 1) * 100 + j] == rez[(j - 1) * 100 + i]){
 				    		circel_list[circel_sh] = [
@@ -294,8 +295,10 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 				}
 			}else{
 				if(rez[(i - 1) * 100 + j] != nothing && except_dr(i,j) && i <= sh && j <= sh){
-					line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1]];
-				  line_sh++;
+					if(!select_map_reb.has(i * 100 + j)){
+						line_list[line_sh] = [dot_list[i][0],dot_list[i][1],dot_list[j][0],dot_list[j][1]];
+						line_sh++;
+					}
 					if(mass_active){
 						circel_list[circel_sh] = [
 							(dot_list[i][0] + dot_list[j][0]) / 2,
@@ -312,6 +315,12 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 		draw_line(line_list[i][0],line_list[i][1],line_list[i][2],line_list[i][3],ctx1);
 	}
 	ctx1.stroke();
+
+	ctx_l1.beginPath();
+	for(var i = 0; i < line_sh; i++ ){
+		draw_line(line_list[i][0],line_list[i][1],line_list[i][2],line_list[i][3],ctx1);
+	}
+	ctx_l1.stroke();
 
 	ctx1.font= "15px Verdana";
 	for(var i = 0; i < circel_sh; i++ ){
@@ -408,11 +417,6 @@ function dell_all_reb(){
 	writln("All reb delete");
 	redraw_line();
 	output_matrix_reb();
-}
-
-function matrix(i,j,wr = false){
-	if(wr){writln(rez[(j - 1)* 100 + i]);}
-	return rez[(j - 1)* 100 + i];
 }
 
 function dell_top(num,d_all = false){

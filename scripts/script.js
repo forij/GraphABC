@@ -10,6 +10,9 @@ options_visable = false;
 move_top_bool = false;
 default_mass.value = 1;
 
+//Use arg
+	var N = 0;
+	var matrix = [];
 
 settings_dop_visible = false;
 mouse_x = 0;
@@ -25,11 +28,11 @@ sh = 1;
 sh_reb = 0;
 list_reb = [];
 matrix_sm = [];
+
 // Обнуление матрицы
 for(var i = 0; i < 10000; i++ ){
 	rez[i] = nothing;
 }
-
 function mirrow(){
 	for (var i = 0; i < sh; i++) {
 			for (var j = 0; j < sh; j++){
@@ -105,14 +108,18 @@ var left_mouse_b = false;
 
 function output_martix_sm(){
 	innerHTMLContent = "<span> " + (sh - 1) + "<br>";
-	for (var i = 1; i < sh; i++) {
+	N = sh - 1;
+	for (var i = 1; i < sh; i++){
+		let matrix_sr = [];
 		for (var j = 1; j < sh; j++){
 			if(rez[(i - 1) * 100 + j] == Number.MAX_VALUE){
 				innerHTMLContent = innerHTMLContent + " "  + '∞';
 			}else{
 				innerHTMLContent = innerHTMLContent + " " + rez[(i - 1) * 100 + j];
 			}
+			matrix_sr[j - 1] = rez[(i - 1) * 100 + j]
 		}
+		matrix[i - 1] = matrix_sr;
 		innerHTMLContent = innerHTMLContent + "<br>";
 	}
 	innerHTMLContent = innerHTMLContent + "</span>";
@@ -246,13 +253,21 @@ function move_top_abc(x1,y1){
 			if(move_top_index != -1){
 				redraw_line(move_top_index,true,ctx_l2,ctx_l2);
 				ctx_l3.font= "25px Verdana";
-				draw_circel(x1,y1,move_top_index,top_color,0.1,top_radius ,false,ctx_l2);
+				if(!select_map.has(move_top_index)){
+					draw_circel(x1,y1,move_top_index,top_color,0.1,top_radius ,false,ctx_l2);
+				}else{
+					window['select_top'].apply(this,select_map.get(move_top_index).concat(ctx_l2));
+				}
 			}
 		}
 	}else{
 		move_top(move_top_index,x1,y1);
 		redraw_line(move_top_index,true,ctx_l2,ctx_l2);
-		draw_circel(x1,y1,move_top_index,top_color,0.1,top_radius ,false,ctx_l2);
+		if(!select_map.has(move_top_index)){
+			draw_circel(x1,y1,move_top_index,top_color,0.1,top_radius ,false,ctx_l2);
+		}else{
+			window['select_top'].apply(this,select_map.get(move_top_index).concat(ctx_l2));
+		}
 	}
 }
 

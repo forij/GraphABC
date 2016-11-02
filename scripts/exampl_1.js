@@ -14,29 +14,78 @@ height = 640;
 var encoder = new GIFEncoder();
 
 encoder.setRepeat(0);
-encoder.setDelay(150);
+encoder.setDelay(400);
 encoder.start();
+
+alert(matrix);
 
 k = 2;
 k_x = ~~(width / k);
 k_y = ~~(height / k);
 
-writln(k_x,'#0F0');
-writln(k_y,'#0F0');
+  var n = N,k = 2,p = 1;
+  var st = [];
+  var st_i = 0;
+  var last_top = false;
 
-l = new Date();
-let last = l.getSeconds() * 1000 + l.getMilliseconds();
+function put(top){
+  st[st_i] = top;
+  matrix[st[st_i] - 1][st[st_i - 1] - 1] = 2;
+  matrix[st[st_i - 1] - 1][st[st_i] - 1] = 2;
+  buff[buff.length] = ['select_reb',[st[st_i - 1],st[st_i]]];
+  st_i++;
+}
+
+function get(){
+  st_i--;
+  try {
+    matrix[st[st_i] - 1][st[st_i - 1] - 1] = 1;
+    matrix[st[st_i - 1] - 1][st[st_i] - 1] = 1;
+  } catch (e) {  }
+}
+
+function nex_top(top){
+  if(last_top){
+    i = st[st_i] + 1;
+  }else{
+    i = 1;
+  }
+  while(i <= n && matrix[i - 1][top - 1] != 1){
+    i++;
+  }
+  if(i == n + 1){
+    return -1;
+  }else{
+    return i;
+  }
+}
 
 buff = [];
 
-
-for(var i = 0; i < k; i++){
-  for(var j = 0; j < k; j++){
-    buff[buff.length] = ['new_top',[~~(k_x / 2) + k_x * i,~~(k_y / 2) + k_y * j]];
-    buff[buff.length] = ['select_top',[k * i + j + 1,'#0f0','inf']];
-    buff[buff.length] = ['full_graph',['inf']];
-  }
+function output(){
+  writln(st);
 }
+
+
+  st[st_i] = p;
+  st_i = 1;
+
+  while(st_i > 0){
+    t = nex_top(st[st_i - 1]);
+    if(t != -1){
+      last_top = false;
+      put(t);
+      if(st_i >= k + 1){
+        output();
+        get();
+        last_top = true;
+      }
+    }else{
+      get();
+      last_top = true;
+    }
+  }
+
 /*/
 for(var j = 0; j < k * k; j++){
   buff[buff.length] = ['dell_top',[1]];
@@ -44,12 +93,8 @@ for(var j = 0; j < k * k; j++){
 //*/
 
 function f1(i){
-  l = new Date();
-  let last = l.getSeconds() * 1000 + l.getMilliseconds();
   if(i < buff.length){
     window[buff[i][0]].apply(this, buff[i][1]);
-    n = new Date();
-    let now = n.getSeconds() * 1000 + n.getMilliseconds();
     encoder.addFrame(get_frame());
     i++;
     setTimeout(f1,10,i);
