@@ -13,6 +13,7 @@
 								document.getElementById("basic_page").style.visibility = "visible";
 							}'
 		onkeydown="terminal_visable(event.keyCode);
+							if(event.keyCode == 77){move_mode = !move_mode}
 							if(input_comand != document.activeElement){handler_event_keydown(event.keyCode)}
 							else{terminal_key(event.keyCode)}">
 		<div id="load_div">
@@ -44,10 +45,10 @@
 							onselectstart="return false"
 							onclick="return false"
 							onmousedown="	if(event.which == 1 && !move_top_bool){update(event.pageX,event.pageY,true);}
-														if(event.which == 2 && !wait_reb_active){move_top_bool = true;}
+														if(event.which == 2 && !wait_reb_active || (move_mode && event.which == 3)){move_top_bool = true;}
 														if(event.which == 3 && !wait_reb_active && !move_top_bool){update(event.pageX,event.pageY,true,3);}
 														return false;"
-							onmouseup=" if(event.which == 2){move_top_bool = false; move_top_index = -1; redraw_line(); redraw_circel(); clear(ctx_l2); }
+							onmouseup=" if(event.which == 2 || (move_mode && event.which == 3)){move_top_bool = false; move_top_index = -1; redraw_line(); redraw_circel(); clear(ctx_l2); }
 													if(event.which == 1){
 													if(last_dot != -1){update(event.pageX,event.pageY);} last_dot = -1; wait_reb(event.pageX,event.pageY);}
 													return false;"

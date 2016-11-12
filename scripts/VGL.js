@@ -143,7 +143,7 @@ function clear(ctx1=ctx_l3){
 
 //Select
 	function select_top(num,color = color_select_top,text = '',pos = 'top',ctx1 = ctx_l4){
-		if(num < sh){
+		if(num > 0 && num < sh){
 			draw_circel(dot_list[num][0],dot_list[num][1],num,color,0.1,top_radius,false,ctx1);
 			if(!select_map.has(num)){
 				select_map.set(num,[num,color,text,pos]);
@@ -168,10 +168,12 @@ function clear(ctx1=ctx_l3){
 	}
 
 	function deselect_top(num){
-		select_map.delete(num);
-		draw_circel(dot_list[num][0],dot_list[num][1],num);
-		redraw_circel();
-		output_matrix_reb();
+		if(num > 0 && num < sh){
+			select_map.delete(num);
+			draw_circel(dot_list[num][0],dot_list[num][1],num);
+			redraw_circel();
+			output_matrix_reb();
+		}
 	}
 
 	function deselect_all(){

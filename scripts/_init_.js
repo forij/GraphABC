@@ -44,5 +44,8 @@
       return(img_ctx);
     }
 
+    move_mode = false; // at start move mode deactive
+    //Move mode active (press 'M')
+
   document.head.appendChild(init_script('scripts/end_load.js'));
 }

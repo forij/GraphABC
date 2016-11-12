@@ -14,10 +14,9 @@ height = 640;
 var encoder = new GIFEncoder();
 
 encoder.setRepeat(0);
-encoder.setDelay(150);
+encoder.setDelay(200);
 encoder.start();
 
-alert(matrix);
 {
 buff = [];
 
@@ -33,6 +32,7 @@ k_y = ~~(height / k);
 function put(top){
   st[st_i] = top;
   buff[buff.length] = ['select_reb',[ st[st_i] , st[st_i - 1] ]];
+  buff[buff.length] = ['select_top',[top]];
   matrix[st[st_i] - 1][st[st_i - 1] - 1] = 2;
   matrix[st[st_i - 1] - 1][st[st_i] - 1] = 2;
   st_i++;
@@ -40,6 +40,7 @@ function put(top){
 
 function get(){
   st_i--;
+  buff[buff.length] = ['deselect_top',[st[st_i]]];
   buff[buff.length] = ['deselect_reb',[ st[st_i] , st[st_i - 1] ]];
   matrix[st[st_i] - 1][st[st_i - 1] - 1] = 1;
   try{
@@ -71,6 +72,7 @@ function output(){
 
 
   st[st_i] = p;
+  buff[buff.length] = ['select_top',[p]];
   st_i = 1;
   last_top = false;
   while(st_i > 0){

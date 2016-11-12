@@ -36,7 +36,7 @@ add_new_help(writln,function(){
 	writln('Аргументы');
 	writln('1: контекст сообшения которое нужно вывести');
 	writln('2: цвет текста');
-	writln('  цвет текста ( задается при помоши Color HEX code )');
+	write('	( задается при помоши Color HEX code )','#F00');
 });
 
 function writln(date,color = "#FFF",_scroll_down = true){
