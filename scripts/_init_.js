@@ -8,6 +8,7 @@
     return script;
   }
 
+  document.head.appendChild(init_script('scripts/control.js'));
   document.head.appendChild(init_script('scripts/script.js'));
   document.head.appendChild(init_script('scripts/terminal.js'));
   document.head.appendChild(init_script('scripts/VGL.js'));

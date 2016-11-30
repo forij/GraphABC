@@ -7,15 +7,7 @@
 		<title>GraphABC</title>
 		<meta charset="utf-8">
 	</head>
-	<BODY onload='
-							if(!isMobile.any()){
-								document.getElementById("load_div").style.visibility = "hidden";
-								document.getElementById("basic_page").style.visibility = "visible";
-							}'
-		onkeydown="terminal_visable(event.keyCode);
-							if(event.keyCode == 77){move_mode = !move_mode}
-							if(input_comand != document.activeElement){handler_event_keydown(event.keyCode)}
-							else{terminal_key(event.keyCode)}">
+	<BODY>
 		<div id="load_div">
 				<img height="70" width="70" src="img/Logo.svg" alt="Logo.svg">
 				<div id="txt-costl">Graph</div>
@@ -44,30 +36,13 @@
 			<canvas width='1280px'	height='640px' class='layer' id="gr_paint"
 							onselectstart="return false"
 							onclick="return false"
-							onmousedown="	if(event.which == 1 && !move_top_bool){update(event.pageX,event.pageY,true);}
-														if(event.which == 2 && !wait_reb_active || (move_mode && event.which == 3)){move_top_bool = true;}
-														if(event.which == 3 && !wait_reb_active && !move_top_bool){update(event.pageX,event.pageY,true,3);}
-														return false;"
-							onmouseup=" if(event.which == 2 || (move_mode && event.which == 3)){move_top_bool = false; move_top_index = -1; redraw_line(); redraw_circel(); clear(ctx_l2); }
-													if(event.which == 1){
-													if(last_dot != -1){update(event.pageX,event.pageY);} last_dot = -1; wait_reb(event.pageX,event.pageY);}
-													return false;"
-							onmousemove="wait_reb(event.pageX,event.pageY); if(move_top_bool){move_top_abc(event.pageX,event.pageY);}"
-							onkeydown="visual_def_mass();"
-							onmouseout="wait_reb_active = false; move_top_bool=false;move_top_index = -1; redraw_line(); redraw_circel(); wait_reb(event.pageX,event.pageY);"
 							oncontextmenu = 'return false;'>
 				Graph Painter</canvas>
 			<a onclick="setupDownloadLink(this,'canvas');" >
 				<img src="img/Save_icon.png" alt="download" id="download_graph_img">
 			</a>
 			<div id="Options" >
-				<div id="hide_options"
-					onclick="
-						if(options_visable){options_visable = false; Options.style.marginLeft = 'calc(50% - 10px)';}
-						else{options_visable = true;Options.style.marginLeft = 'calc(50% - 255px)'; }"
-					onmouseenter="hide_options.style.cssText = 'background-color: rgba(0,0,0,0.4);'"
-					onmouseout="hide_options.style.cssText = 'background-color: rgba(0,0,0,0.1);'"
-					></div>
+				<div id="hide_options"></div>
 				<div id="txt_1"><span id='txt_1_content'>Матриця суміжності</span></div>
 				<a href="" onclick="setupDownloadLink(this,'matrix');" download="Matrix_sm.dat">
 					<img src="img/Save_icon.png" alt="download" id="download_matrix">
@@ -151,90 +126,6 @@
 
 		<img id="image" style=" position: absolute; top: 750px; margin-left: -320px;">
 		<script type="text/javascript" src="scripts/_init_.js"></script>
-		<!-- Автор : В.Демченко (11-Б 2016-2017нр)
-
-		                          @@@@@@@@@@#                                   #@@@@@@@@@@
-		                        G@@@      @@@@@@                             @@@@@@      @@@9
-		                       h@@@           @@@@@                       @@@@@           @@@9
-		                       @@@              @@@@#                   #@@@@              @@@
-		                       @@2                9@@@3               3@@@9                X@@
-		                       @@                    @@@#           M@@@                    @@
-		                       @@                     @@@@         @@@@                     @@
-		                       @@                       @@@@     @@@@                       @@
-		                       @@r                        @@@r r@@@                        s@@
-		                       @@G                         @@@@@@@                         A@@
-		                       @@@                          h@@@h                          @@@
-		                       @@@                         X@@@@@X                         @@@
-		                       :@@h                       @@@B H@@@                       A@@r
-		                        @@@                      @@@     @@@                      @@@
-		                        ;@@h                   M@@@       @@@M                   B@@i
-		                         @@@                  @@@@         @@@@                  @@@
-		                         :@@                 A@@3           3@@A                 @@s
-		                          @@@           ,r29@@@@@@@@@@@@@@@@@@@@@92r,           @@@
-		                           @@;5M@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@M5s@@
-		                     5@@@@@@@@@@@@@AXr    @@@.                 .@@@    r2A@@@@@@@@@@@@@5
-		              .#@@@@@@@@H;  @@@         i@@@                     @@@i         @@@  rH@@@@@@@@#.
-		           @@@@@@@@S        @@@:        @@@                       @@@        r@@@        S@@@@@@@@
-		       &@@@@@H               @@@       @@@                         @@@       @@@               H@@@@@&
-		    ;@@@@B                    @@@     @@@                           @@@     @@@                    B@@@@;
-		   @@@@                       i@@@   @@@                             @@@   @@@5                       @@@@
-		 @@@@                          3@@  @@@            @@@@@@@            @@@  @@G                          @@@@
-		@@@                             H@@@@@           @@@@@@@@@@@           @@@@@@                             @@@
-		@@X                              @@@@r          .@@@@@@@@@@@.          r@@@@                              X@@2
-		@@                               i@@@           S@@@@@@@@@@@S           @@@i                               @@#
-		@@@                             r@@@@@           @@@@@@@@@@@           @@@@@r                             @@@
-		A@@@                            @@@M@@@           @@@@@@@@@           @@@M@@@                            @@@&
-		  @@@M                         @@@  h@@@            @@@@@            @@@h  @@@                         M@@@
-		    @@@@@                     @@@.   S@@i                           i@@S   .@@@                     @@@@@
-		     r@@@@@i                 h@@@     A@@.                         .@@A     #@@h                 i@@@@@r
-		         &@@@@@@9           :@@@       i@@X                       2@@i       @@@:           9@@@@@@&
-		             i@@@@@@@@@,    @@@         @@@@                     @@@@         @@@    ,@@@@@@@@@i
-		                 r@@@@@@@@@@@@3          @@@@                   @@@@          3@@@@@@@@@@@@r
-		                         2@@@@@@@@@@@@@@@@@@@@@AG9X255S552X9GA@@@@@@@@@@@@@@@@@@@@@2
-		                          B@@       ;5A@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@A5;       @@M
-		                          @@5                @@@             @@@                5@@
-		                         @@@                  @@@           @@@                  @@@
-		                        .@@@                   @@@@       @@@@                   @@@.
-		                        @@@:                    @@@@     @@@@                    :@@@
-		                        @@@                      i@@@   @@@i                      @@@
-		                       H@@;                        @@@A@@@                        ;@@B
-		                       @@@                          @@@@@                          @@@
-		                       @@@                          @@@@@                          @@@
-		                       @@5                        @@@@ @@@@                        5@@
-		                       @@,                       @@@X   X@@@                       ,@@
-		                       @@                      @@@@       @@@@                      @@
-		                       @@                    M@@@           @@@M                    @@
-		                       @@:                 r@@@A             &@@@r                 :@@
-		                       @@@               @@@@@                 @@@@@               @@@
-		                       @@@r            @@@@S                     i@@@@            r@@@
-		                        @@@;        B@@@@i                         i@@@@B        ;@@@
-		                         @@@@@@@@@@@@@#                               M@@@@@@@@@@@@@
-		                           .@@@@@@r                                       s@@@@@@.
-
-		                hhhhh          hhh
-		               hhhhhh          hhh
-		              hhh hhh         hhh
-		             hhh  hhhh      hhhhhhhhhh       hhhhhhhh        hh  hhhhhhh    hhhhhhh      hhh          hhh
-		            hhh    hhh       hhh          hhhh     hhhh     hhhhh     hhhhhh     hhhh     hh         hhh
-		           hhh     hhh       hhh         hhh        hhh     hhhh       hhhh       hhh     hh        hhh
-		          hhh      hhhh      hhh        hhh         hhh     hhh        hhh        hhh     hhh      hhh
-		         hhh        hhh     hhh         hh          hhh    hhh        hhh        hhh       hh     hhh
-		        hhhhhhhhhhhhhhh     hhh         hh          hhh    hhh        hhh        hhh       hhh   hhh
-		       hhhhhhhhhhhhhhhh     hhh        hhh          hh     hhh        hhh        hhh       hhh  hhh
-		      hhh            hh     hh         hhh         hh     hhh        hhh         hh         hh hhh
-		     hhhh            hhh    hh          hhh      hhh      hhh        hhh        hhh         hhhhh
-		    hhh              hhh    hhhhhhh      hhhhhhhhhh      hhh         hh         hh          hhhh
-		                                                                                            hhh
-		                                                                                           hhh
-		                                                                                         hhhh
-		                                                                                      hhhhh
-
-
-
-
-		-->
-
-
-
+		<!-- Автор : В.Демченко (11-Б 2016-2017н.р.) !-->
 	</BODY>
 </html>

@@ -426,11 +426,11 @@ function update(x,y,new_t = false,mode1){
 	switch(parseInt(mode1)){
 		case 1:
 		l = 0;
-		l_min = 1000000;
+		l_min = Number.MAX_VALUE;
 		new_dot = sh;
 		for (var i = 1; i < sh; i++) {
 			l = Math.sqrt((Math.pow((dot_list[i][0] - x),2))+(Math.pow((dot_list[i][1] - y),2)));
-			if( l_min > l && l < top_radius * 2){
+			if( l_min > l && l < top_radius * 2 + 30){
 				l_min = l;
 				new_dot = i;
 			}
