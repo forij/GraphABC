@@ -11,7 +11,9 @@ document.body.onkeydown = function(event){
   if(event.keyCode == 77){move_top_bool = false;
     move_top_index = -1;	redraw_line();
     redraw_circel(); clear(ctx_l2);
-    move_mode = !move_mode;}
+    last_dot = -1;
+    move_mode = !move_mode;
+  }
   if(input_comand != document.activeElement){handler_event_keydown(event.keyCode)}
     else{terminal_key(event.keyCode)}
 }
@@ -20,7 +22,10 @@ document.body.onkeydown = function(event){
 //Canvas (gr_paint)
 document.getElementById('gr_paint').onmousedown = function(event){
   if(event.which == 1 && !move_top_bool ){update(event.pageX,event.pageY,true);}
-  if(!wait_reb_active && ( event.which == 2  || ( move_mode && event.which == 1) )){move_top_bool = true;}
+  if(!wait_reb_active && ( event.which == 2  || ( move_mode && event.which == 1) )){
+    move_top_bool = true;
+    move_top_abc(event.pageX,event.pageY);
+  }
   if(event.which == 3 && !wait_reb_active && !move_top_bool){update(event.pageX,event.pageY,true,3);}
   return false;
 }
@@ -35,8 +40,9 @@ document.getElementById('gr_paint').onmouseup = function(event){
 }
 
 document.getElementById('gr_paint').onmousemove = function(event){
-  wait_reb(event.pageX,event.pageY);
-  if(move_top_bool){move_top_abc(event.pageX,event.pageY);}
+  if(move_top_bool){move_top_abc(event.pageX,event.pageY);}else{
+    wait_reb(event.pageX,event.pageY);
+  }
 }
 
 document.getElementById('gr_paint').onkeydown = function(event){
@@ -47,6 +53,11 @@ document.getElementById('gr_paint').onmouseout = function(event){
   wait_reb_active = false; move_top_bool=false; move_top_index = -1;
   redraw_line();
   redraw_circel();
+  if(event.which == 2 || (move_mode && event.which == 1)){
+    move_top_bool = false; move_top_index = -1;
+    redraw_line(); redraw_circel(); clear(ctx_l2);}
+  if(event.which == 1){
+  if(last_dot != -1){update(event.pageX,event.pageY);} last_dot = -1; wait_reb(event.pageX,event.pageY);}
   wait_reb(event.pageX,event.pageY);
 }
 //Canvas (gr_paint)

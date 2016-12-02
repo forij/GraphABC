@@ -33,6 +33,7 @@ matrix_sm = [];
 for(var i = 0; i < 10000; i++ ){
 	rez[i] = nothing;
 }
+
 function mirrow(){
 	for (var i = 0; i < sh; i++) {
 			for (var j = 0; j < sh; j++){
@@ -259,6 +260,8 @@ function move_top_abc(x1,y1){
 					window['select_top'].apply(this,select_map.get(move_top_index).concat(ctx_l2));
 				}
 			}
+		}else{
+			move_top_bool = false;
 		}
 	}else{
 		move_top(move_top_index,x1,y1);
@@ -469,7 +472,7 @@ function update(x,y,new_t = false,mode1){
 		break;
 		case 2:
 			selct_t = -1;
-			l_min = 1000000;
+			l_min = Number.MAX_VALUE;
 			for (var i = 1; i < sh; i++) {
 				l = Math.sqrt((Math.pow((dot_list[i][0] - x),2))+(Math.pow((dot_list[i][1] - y),2)));
 				if( l_min > l && l < (top_radius )){
@@ -487,7 +490,7 @@ function update(x,y,new_t = false,mode1){
 			}
 		break;
 		case 3:
-			l_min = 100000000;
+			l_min = Number.MAX_VALUE;
 			del_r = -1;
 
 			for (var i = 1; i < sh; i++) {
@@ -498,7 +501,7 @@ function update(x,y,new_t = false,mode1){
 				}
 			}
 
-			if(l_min != 100000000){
+			if(l_min != Number.MAX_VALUE){
 				dell_top(selct_t);
 			}else{
 				for(var i = 0; i < list_reb.length; i++){
@@ -509,7 +512,7 @@ function update(x,y,new_t = false,mode1){
 						del_r = [list_reb[i][0] ,list_reb[i][1]];
 					}
 				}
-				if(l_min != 100000000){
+				if(l_min != Number.MAX_VALUE){
 					del_reb(del_r[0],del_r[1]);
 				}
 			}

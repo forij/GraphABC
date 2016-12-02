@@ -388,7 +388,7 @@ function mass_reb(m){
 }
 
 function move_top(num, x1, y1,redraw_active = true){
-	if(num < 100){
+	if(num < sh){
 		dot_list[num][0] = x1;
 		dot_list[num][1] = y1;
 	}
