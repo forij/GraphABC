@@ -8,7 +8,6 @@
 		<meta charset="utf-8">
 	</head>
 	<BODY>
-		<!--
 		<div id="load_div">
 				<img height="70" width="70" src="img/Logo.svg" alt="Logo.svg">
 				<div id="txt-costl">Graph</div>
@@ -23,7 +22,7 @@
 					<div id="floatBarsG_8" class="floatBarsG"></div>
 				</div>
 		</div>
-		-->
+
 		<div id='basic_page'>
 			<div id="logo">
 				<img height="70" src="img/Logo.svg" alt="Logo.svg">
@@ -39,9 +38,12 @@
 							onclick="return false"
 							oncontextmenu = 'return false;'>
 				Graph Painter</canvas>
-			<a onclick="setupDownloadLink(this,'canvas');" >
-				<img src="img/Save_icon.png" alt="download" id="download_graph_img">
-			</a>
+			<div id="toolbar">
+				<img src="img/move_icon.png" alt="move mode" id="move_mode_button" width="24" height="24">
+				<a href="" onclick="setupDownloadLink(this,'canvas');" download="Matrix_sm.dat">
+					<img src="img/Save_icon.png" alt="download" id="download_graph_img">
+				</a>
+			</div>
 			<div id="Options" >
 				<div id="hide_options"></div>
 				<div id="txt_1"><span id='txt_1_content'>Матриця суміжності</span></div>
@@ -68,7 +70,7 @@
 					<span>Режим</span>
 					<select id="mode" width="100" onChange="">
 					     <option value="1">Базовий</option>
-					     <option value="2">Виділення</option>
+					  <!--   <option value="2">Виділення</option> -->
 	   				</select>
 						<div style="overflow-y: auto; max-height: 470px; padding-top: 0px;">
 							<div id='modul1' class='modul'
@@ -99,7 +101,7 @@
 								<div id='color_modul'>
 									<samp>  Товщина ребр </samp>
 									<input 	id='width_l' type="range" value='2' min='0.1' max='15'
-													onmouseup="width_line = this.value; redraw_line();"/>
+													oninput="width_line = this.value; redraw_line();"/>
 								</div>
 								<div id='color_modul'>
 									<samp>  Радіус вершин </samp>
@@ -124,7 +126,9 @@
 				</div>
 				<div id="mass_next_reb_output">1</div>
 			</div>
-
+			<!--
+			<img src="img/bug_report_icon.png" width='40' height='40' id="bug_report_icon" >
+			-->
 		<img id="image" style=" position: absolute; top: 750px; margin-left: -320px;">
 		<script type="text/javascript" src="scripts/_init_.js"></script>
 		<!-- Автор : В.Демченко (11-Б 2016-2017н.р.) !-->

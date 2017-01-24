@@ -13,7 +13,16 @@ document.body.onkeydown = function(event){
     redraw_circel(); clear(ctx_l2);
     last_dot = -1;
     move_mode = !move_mode;
+
+    if(!move_mode){
+      move_mode_button.style.margin = '3px 3px 0px 5px';
+      move_mode_button.style.border = '0px double black';
+    }else{
+      move_mode_button.style.margin = '1px 1px 0px 4px';
+      move_mode_button.style.border = '1px double black';
+    }
   }
+
   if(input_comand != document.activeElement){handler_event_keydown(event.keyCode)}
     else{terminal_key(event.keyCode)}
 }
@@ -81,3 +90,17 @@ document.getElementById('hide_options').onmouseout = function(event){
   hide_options.style.cssText = 'background-color: rgba(0,0,0,0.1);'
 }
 //hide_options
+
+//toolbar
+document.getElementById('move_mode_button').onclick = function(event){
+  if(move_mode){
+    move_mode = false;
+    this.style.margin = '3px 3px 0px 5px';
+    this.style.border = '0px double black';
+  }else{
+    move_mode = true;
+    this.style.margin = '1px 1px 0px 4px';
+    this.style.border = '1px double black';
+  }
+}
+//toolbar

@@ -166,6 +166,7 @@ body{
 	transition-property: left,height;
 	transition-duration: 0.5s;
 	transition-timing-function: linear;
+	z-index: 1;
 }
 
 #mode{
@@ -205,12 +206,6 @@ body{
 	font: bold 18pt Sans-serif;
 }
 
-#download_graph_img{
-	position: absolute;
-	top: 50px;
-	right: calc(50% - 630px);
-}
-
 #color_modul{
 	width: 100%;
 	text-align: center;
@@ -242,3 +237,32 @@ body{
 #inp_color{
 	margin-right: 0px;
 }
+
+#toolbar{
+	position: absolute;
+	top: 35px;
+	right: calc(50% - 640px);
+	background: #FFF;
+	border: 4px double black;
+}
+
+#move_mode_button{
+	margin: 3px 3px 0px 5px;
+}
+
+#download_graph_img{
+	margin: 5px 5px 0px 5px;
+}
+
+#bug_report_icon{
+	position: absolute;
+	top: 230px;
+	left: 5px;
+	z-index: 0;
+}
+
+/* Atomy_Terminal.css */
+pre{
+	margin: 5px;
+}
+/* Atomy_Terminal.css */

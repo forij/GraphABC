@@ -76,6 +76,9 @@ move_top_bool = false;
 _init_();
 
 function draw_line(x1,y1,x2,y2,ctx1 = ctx_l0,color = color_reb){
+	function write_hello(){
+		writln("Hello");
+	}
 	ctx1.strokeStyle = color;
 	ctx1.moveTo(x1,y1);
 	ctx1.lineTo(x2,y2);
@@ -364,6 +367,7 @@ function redraw_line(except = 0,dr = false,ctx1 = ctx_l0,ctx2 = ctx_l1_5){
 }
 
 function new_reb(last_dot,new_dot,mass_1 = def_mass){
+	if(!mass_active){mass_1 = def_mass}
 	if(last_dot < sh && new_dot < sh){
 		def_mass = Number(def_mass);
 		if(mass_1 == 'inf'){

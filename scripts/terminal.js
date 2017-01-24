@@ -1,3 +1,4 @@
+{
 var comand = '';
 var comand_set = new Set();
 var xhr = new XMLHttpRequest();
@@ -20,6 +21,13 @@ comand_set.add('write');
 
 //special comand objects
 
+//Basic Object VGL
+	var VGL = {}
+//	VGL.writln = "sdfs";
+	VGL["writln"] = function(){	writln("Hello World!") };
+
+	VGL.writln();
+
 function scroll_down(){
 	terminal.scrollTop = terminal.scrollHeight;
 }
@@ -34,7 +42,7 @@ function write(date,color = "#FFF",_scroll_down = true){
 add_new_help(writln,function(){
 	writln('Команда вывода текста в консоль Atomy','#0F0');
 	writln('Аргументы');
-	writln('1: контекст сообшения которое нужно вывести');
+	writln('1: контекст сообшения ');
 	writln('2: цвет текста');
 	write('	( задается при помоши Color HEX code )','#F00');
 });
@@ -279,3 +287,4 @@ write("Atomy Terminal v0.4","#3BCFC8");
 
 terminal_visable();
 import_js('VGL.js');
+}
